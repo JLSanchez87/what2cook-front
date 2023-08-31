@@ -35,7 +35,7 @@ const Home = () => {
               <li>
                 <div className="flex flex-row">
                   <img src="https://picsum.photos/100" alt="lorem picsum" />
-                  <div className="flex flex-col pl-4 w-100">
+                  <div className="flex flex-col px-4 w-full">
                     <span>Recipe name</span>
                     <div className="flex flex-row justify-between">
                       <span>prep time: 30mins</span>

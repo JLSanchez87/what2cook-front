@@ -16,14 +16,14 @@ const NavBar = () => {
   };
   return (
     <nav className="flex flex-row justify-between p-8">
-      <h1>🧑🏻‍🍳 what2cook</h1>
+      <h1 className="text-xl font-bold drop-shadow-lg">🧑🏻‍🍳 what2cook</h1>
       <div className="flex flex-row">
         <span className="mx-4">
-          <Link href="/">Home</Link>
+          <Link href="/">My fridge</Link>
         </span>
         <span className="mx-4">
           {token ? (
-            <Link href="/">My fridge</Link>
+            <Link href="/account">User name here</Link>
           ) : (
             <Link href="/register">Register</Link>
           )}
