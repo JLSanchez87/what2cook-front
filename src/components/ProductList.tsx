@@ -1,6 +1,4 @@
 import { Product } from "@/types/Interfaces";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { z } from "zod";
@@ -14,7 +12,9 @@ type DataAddToFridgeForm = z.infer<typeof addToFridgeValidator>;
 const ProductList = () => {
   const [products, setProducts] = useState<Product[] | null>(null);
   const [token, setToken] = useState<null | string>(null);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
+  // Get token from localStorage
   useEffect(() => {
     const tokenFromLs = localStorage.getItem("token");
 
@@ -23,6 +23,7 @@ const ProductList = () => {
     }
   }, []);
 
+  // Get and sort the products from the API
   useEffect(() => {
     const getProductsFromApi = async () => {
       const response = await axios.get("http://localhost:3001/products");
@@ -34,6 +35,7 @@ const ProductList = () => {
     getProductsFromApi();
   }, []);
 
+  // Post an axios request with the token and the value of the selected item
   const handleFridgeSubmit = async () => {
     console.log("clicked");
     console.log(selectedIds);
@@ -50,20 +52,10 @@ const ProductList = () => {
     );
   };
 
-  // const { register, handleSubmit, formState } = useForm({
-  //   // resolver: zodResolver(addToFridgeValidator),
-  // });
-
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-
   return (
     <>
       <div>
-        <form
-          // onSubmit={handleSubmit(handleFridgeSubmit)}
-          className="flex flex-row flex-wrap mt-2"
-        >
-          {/* {formState.errors.root?.message} */}
+        <form className="flex flex-row flex-wrap mt-2">
           {products === null ? (
             <p>Loading products...</p>
           ) : (
@@ -85,7 +77,6 @@ const ProductList = () => {
                             )
                           : setSelectedIds([...selectedIds, product.id])
                       }
-                      className="checked:bg-lime-300"
                     />
                     {product.productname}
                   </label>
