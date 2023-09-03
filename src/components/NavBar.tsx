@@ -1,6 +1,7 @@
 import { User } from "@/types/Interfaces";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const NavBar = () => {
@@ -33,13 +34,17 @@ const NavBar = () => {
     getUserInfo();
   }, [token]);
 
+  const router = useRouter();
+
   const handleClick = () => {
     localStorage.removeItem("token");
     setToken(null);
+    // router.push("/");
+    window.location.reload();
   };
 
   if (user === null) {
-    return <p>Loading book, please wait...</p>;
+    return;
   }
 
   return (

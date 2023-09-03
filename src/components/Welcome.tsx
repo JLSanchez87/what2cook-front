@@ -1,73 +1,48 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import LoginForm from "./LoginForm";
+import Register from "./Register";
 
 const Welcome = () => {
   return (
-    <>
-      <h1>Welcome to what2cook!</h1>
-      <Tabs defaultValue="account" className="w-[400px]">
+    <main className="flex flex-col pt-40 items-center min-h-screen">
+      <h1 className="mb-8 text-2xl">Welcome to 🧑🏻‍🍳 what2cook!</h1>
+      <Tabs defaultValue="login" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+          <TabsTrigger value="login">Login</TabsTrigger>
+          <TabsTrigger value="register">Register</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
+
+        <TabsContent value="login">
           <Card>
             <CardHeader>
-              <CardTitle>Account</CardTitle>
+              <CardTitle>Login</CardTitle>
               <CardDescription>
-                Make changes to your account here. Click save when you're done.
+                Fill in your login information to access your Fridge!
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" defaultValue="Pedro Duarte" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="username">Username</Label>
-                <Input id="username" defaultValue="@peduarte" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save changes</Button>
-            </CardFooter>
+            <LoginForm />
           </Card>
         </TabsContent>
-        <TabsContent value="password">
+
+        <TabsContent value="register">
           <Card>
             <CardHeader>
-              <CardTitle>Password</CardTitle>
+              <CardTitle>Create a new account!</CardTitle>
               <CardDescription>
-                Change your password here. After saving, you'll be logged out.
+                Create your account here, after registering you can log in!
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save password</Button>
-            </CardFooter>
+            <Register />
           </Card>
         </TabsContent>
       </Tabs>
-    </>
+    </main>
   );
 };
 
