@@ -10,9 +10,26 @@ import Register from "./Register";
 
 const Welcome = () => {
   return (
-    <main className="flex flex-col pt-40 items-center min-h-screen">
-      <h1 className="mb-8 text-2xl">Welcome to 🧑🏻‍🍳 what2cook!</h1>
-      <Tabs defaultValue="login" className="w-[400px]">
+    <main className="flex flex-col bg-cover bg-center bg-gradient-to-b from-lime-300 to-orange-200 items-center min-h-screen">
+      <div
+        className="absolute w-screen h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url('landing-bg.jpg')`,
+          opacity: 0.5,
+        }}
+      />
+      <h1 className="z-10 pt-20 font-serif text-4xl text-green-600">
+        The app for people who don't know...
+      </h1>
+      <p className="z-10 font-lobster font-bold mb-10 text-8xl text-amber-400">
+        🧑🏻‍🍳what2cook
+      </p>
+      <p className="z-10 font-lobster font-bold mb-8 text-8xl text-amber-400">
+        🍔 🍖 🍗 🍝
+        <br />
+        🥦 🧀 🍞 🧂
+      </p>
+      <Tabs defaultValue="login" className="z-10 w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="login">Login</TabsTrigger>
           <TabsTrigger value="register">Register</TabsTrigger>
