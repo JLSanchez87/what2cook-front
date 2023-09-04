@@ -37,8 +37,6 @@ const ProductList = () => {
 
   // Post an axios request with the token and the value of the selected item
   const handleFridgeSubmit = async () => {
-    console.log("clicked");
-    console.log(selectedIds);
     await axios.post(
       "http://localhost:3001/fridge",
       {
