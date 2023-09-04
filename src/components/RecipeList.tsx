@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const RecipeList = () => {
   const [token, setToken] = useState<null | string>(null);
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
+  const [randomRecipe, setRandomRecipe] = useState<Recipe | null>(null);
 
   useEffect(() => {
     const tokenFromLs = localStorage.getItem("token");
@@ -45,20 +46,46 @@ const RecipeList = () => {
     getRecipeIdFromApi();
   }, []);
 
+  useEffect(() => {
+    const getRandomRecipeFromApi = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/recipe/random");
+        setRandomRecipe(response.data);
+      } catch (error) {
+        console.log("Error fetching recipe:", error);
+      }
+    };
+    getRandomRecipeFromApi();
+  }, []);
+
   return (
-    <>
+    <div>
+      {randomRecipe === null ? (
+        <p>Loading random recipe..</p>
+      ) : (
+        <div key={randomRecipe.id}>
+          <h1 className="text-lg font-bold">Recipe List</h1>
+          <div
+            className="flex flex-col h-40 bg-gray-400 justify-center items-center my-4 bg-cover bg-center rounded-2xl"
+            style={{ backgroundImage: `url(${randomRecipe.recipeImg})` }}
+          >
+            <h2 className="text-lg font-bold p-2 bg-green-300 rounded-lg">
+              Recipe of the Day!
+            </h2>
+            <p className="p-2 bg-green-300 rounded-b-lg">
+              {randomRecipe.recipename}
+            </p>
+          </div>
+          <p>other available recipes:</p>
+        </div>
+      )}
+
       {recipes === null ? (
         <p>Loading recipes..</p>
       ) : (
         recipes.map((recipe) => {
           return (
             <div key={recipe.id}>
-              <h1 className="text-lg font-bold">Recipe List</h1>
-              <div className="flex flex-col h-40 bg-gray-400 justify-center items-center my-4">
-                <h2 className="text-lg font-bold">Recipe of the Day!</h2>
-                <p>{recipe.recipename}</p>
-              </div>
-              <p>other available recipes:</p>
               <div key={recipe.id} className="mt-4">
                 <ul>
                   <li>
@@ -83,7 +110,7 @@ const RecipeList = () => {
           );
         })
       )}
-    </>
+    </div>
   );
 };
 
