@@ -48,12 +48,12 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="flex flex-row justify-between p-8">
-      <h1 className="text-xl font-bold drop-shadow-lg hover:drop-shadow-xl">
-        🧑🏻‍🍳 what2cook
+    <nav className="flex flex-row justify-between p-8 rounded-b-3xl bg-header">
+      <h1 className="text-2xl font-bold drop-shadow-lg font-lobster">
+        🧑🏻‍🍳what2cook
       </h1>
       <div className="flex flex-row">
-        <span className="mx-4">
+        <span className="mx-4 transition ease-in-out delay-100 hover:scale-105 hover:underline-offset-4">
           <Link href="/">My fridge</Link>
         </span>
         <span className="mx-4">

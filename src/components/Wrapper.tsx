@@ -9,7 +9,9 @@ const Wrapper = (props: WrapperProps) => {
   return (
     <>
       <NavBar />
-      <main>{props.children}</main>
+      <main className="flex flex-col justify center items-center mx-auto max-w-[85%]">
+        {props.children}
+      </main>
     </>
   );
 };

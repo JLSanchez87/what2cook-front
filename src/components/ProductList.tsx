@@ -105,11 +105,12 @@ const ProductList = () => {
               products.map((product) => {
                 return (
                   <div
-                    className="mr-2 mb-2 border-solid border-2 border-gray-400 rounded-lg hover:bg-lime-200 active:bg-lime-400 p-1"
+                    className="relative p-1 mb-2 mr-2 transition ease-in-out border-2 border-gray-400 border-solid min-w-content rounded-xl hover:bg-fg hover:scale-105 active:bg-header active:scale-95"
                     key={product.id}
                   >
                     <label htmlFor={product.id.toString()}>
                       <input
+                        className="absolute w-8 h-8 transition ease-in-out bg-white border-2 border-solid appearance-none -top-1 -z-10 shrink-0 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-0 rounded-l-xl hover:bg-fg active:bg-header active:scale-95"
                         type="checkbox"
                         id={product.id.toString()}
                         value={product.id}
@@ -131,7 +132,7 @@ const ProductList = () => {
           </div>
           <div className="w-100">
             <button
-              className="hover:bg-cyan-400 active:bg-green-500 fixed bottom-0 border-solid border-2 border-black rounded-t-lg bg-slate-300 p-2 pb-8 w-60"
+              className="fixed bottom-0 p-2 pb-8 transition ease-in-out bg-green-300 border-2 border-black border-solid rounded-t-lg active:bg-green-500 active:scale-105 w-60 hover:-translate-y-1 hover:scale-110 hover:bg-green-400"
               type="button"
               onClick={handleFridgeSubmit}
             >

@@ -10,21 +10,21 @@ import Register from "./Register";
 
 const Welcome = () => {
   return (
-    <main className="flex flex-col bg-cover bg-center bg-gradient-to-b from-lime-300 to-orange-200 items-center min-h-screen">
+    <main className="flex flex-col items-center min-h-screen bg-fixed bg-center bg-cover bg-gradient-to-b from-[var(--header)] to-[var(--div-color)]">
       <div
-        className="absolute w-screen h-screen bg-cover bg-center"
+        className="absolute z-10 w-screen min-h-screen bg-fixed bg-center bg-cover"
         style={{
           backgroundImage: `url('landing-bg.jpg')`,
-          opacity: 0.5,
+          opacity: 0.1,
         }}
       />
-      <h1 className="z-10 pt-20 font-serif text-4xl text-green-600">
-        The app for people who don't know...
+      <h1 className="z-10 pt-10 font-serif text-2xl text-fg">
+        The app for people who don't know..
       </h1>
-      <p className="z-10 font-lobster font-bold mb-10 text-8xl text-amber-400">
+      <p className="z-10 mb-10 font-bold font-lobster text-7xl text-cta">
         🧑🏻‍🍳what2cook
       </p>
-      <p className="z-10 font-lobster font-bold mb-8 text-8xl text-amber-400">
+      <p className="z-10 mb-8 text-6xl font-bold font-lobster text-amber-400">
         🍔 🍖 🍗 🍝
         <br />
         🥦 🧀 🍞 🧂
