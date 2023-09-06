@@ -3,18 +3,61 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import { motion, useScroll } from "framer-motion";
 
-const addToFridgeValidator = z.object({
-  productId: z.array(z.number().int()),
-});
+// const addToFridgeValidator = z.object({
+//   productId: z.array(z.number().int()),
+// });
 
-type DataAddToFridgeForm = z.infer<typeof addToFridgeValidator>;
+// type DataAddToFridgeForm = z.infer<typeof addToFridgeValidator>;
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.015,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: "0px" },
+  show: { opacity: 1, x: "0px" },
+};
 
 const ProductList = () => {
   const [products, setProducts] = useState<Product[] | null>(null);
   const [token, setToken] = useState<null | string>(null);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const router = useRouter();
+
+  // Handle changes in the search input
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    // Filter products based on the search query
+    if (products === null) {
+      return;
+    } else {
+      const filteredItems = products.filter((product) =>
+        product.productname.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredProducts(filteredItems);
+    }
+  };
+
+  // Initialize filteredProducts with products when they are fetched
+  useEffect(() => {
+    if (products) {
+      setFilteredProducts(products);
+    }
+  }, [products]);
 
   // Get and sort the products from the API
   useEffect(() => {
@@ -40,6 +83,10 @@ const ProductList = () => {
       );
 
       setProducts(sortedProducts);
+
+      if (sortedProducts) {
+        setFilteredProducts(sortedProducts);
+      }
 
       // Get a list of ID's of the items in the users fridge
       const initialSelectedIds = userFridgeResponse.data.Fridge.map(
@@ -98,72 +145,121 @@ const ProductList = () => {
     <>
       <div>
         <form>
-          <div className="flex flex-row flex-wrap mt-2 mb-10">
-            {/* Selected Items Column */}
-            <div className="flex flex-row flex-wrap w-1/2">
-              {products === null ? (
-                <p>Loading products...</p>
+          <div className="flex flex-row flex-wrap mt-4 mb-10 around">
+            <div className="w-full mb-4">
+              <input
+                type="text"
+                placeholder="Search by product name"
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+                className="w-full p-2 border rounded border-header"
+              />
+            </div>
+
+            {/* Non-Selected Items Column */}
+            <div className="w-1/2 p-4 pr-2 border-2 border-r-0 border-cta rounded-l-xl">
+              <p className="mb-4">Items in your fridge:</p>
+              {filteredProducts.length === 0 ? (
+                <p>No matching products found...</p>
               ) : (
-                products.map((product) => {
-                  if (selectedIds.includes(product.id)) {
-                    return (
-                      <div
-                        className="relative items-start px-2 mb-2 mr-2 transition ease-in-out border-2 border-solid border-cta rounded-xl hover:scale-105 active:scale-95"
-                        key={product.id}
-                      >
-                        <label htmlFor={product.id.toString()}>
-                          <input
-                            className="absolute left-0 w-10 h-6 transition ease-in-out appearance-none -z-10 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-none rounded-l-xl active:scale-95"
-                            type="checkbox"
-                            id={product.id.toString()}
-                            value={product.id}
-                            checked={true}
-                            onChange={(event) =>
-                              setSelectedIds(
-                                selectedIds.filter((i) => i !== product.id)
-                              )
-                            }
-                          />
-                          {product.productname}
-                        </label>
-                      </div>
-                    );
-                  }
-                  return null; // Skip non-selected items
-                })
+                <motion.div
+                  className="flex flex-row flex-wrap w-full"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="show"
+                >
+                  {filteredProducts.map((product, index) => {
+                    if (!selectedIds.includes(product.id)) {
+                      return (
+                        <motion.div
+                          whileHover={{
+                            scale: 1.1,
+                          }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 200,
+                            damping: 17,
+                          }}
+                          whileTap={{ scale: 0.95 }}
+                          variants={itemVariants}
+                          key={index}
+                          className="relative items-start px-2 mb-2 mr-2 border-2 border-solid border-cta rounded-xl"
+                        >
+                          <label
+                            htmlFor={product.id.toString()}
+                            key={product.id}
+                          >
+                            <input
+                              className="absolute left-0 w-10 h-6 appearance-none -z-10 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-none rounded-l-xl"
+                              type="checkbox"
+                              id={product.id.toString()}
+                              value={product.id}
+                              checked={true}
+                              onChange={(event) =>
+                                setSelectedIds(
+                                  selectedIds.filter((i) => i !== product.id)
+                                )
+                              }
+                            />
+                            {product.productname}
+                          </label>
+                        </motion.div>
+                      );
+                    }
+                    return null; // Skip non-selected items
+                  })}
+                </motion.div>
               )}
             </div>
 
             {/* Non-Selected Items Column */}
-            <div className="flex flex-row flex-wrap w-1/2">
-              {products === null ? (
-                <p>Loading products...</p>
+            <div className="w-1/2 p-4 pl-2 border-2 border-l-0 border-cta bg-fg rounded-r-xl">
+              <p className="mb-4">Add these items:</p>
+              {filteredProducts.length === 0 ? (
+                <p>No matching products found...</p>
               ) : (
-                products.map((product) => {
-                  if (!selectedIds.includes(product.id)) {
-                    return (
-                      <div
-                        className="relative items-start px-2 mb-2 mr-2 transition ease-in-out border-2 border-solid border-cta rounded-xl hover:scale-105 active:scale-95"
-                        key={product.id}
-                      >
-                        <label htmlFor={product.id.toString()}>
-                          <input
-                            className="absolute left-0 w-10 h-6 transition ease-in-out appearance-none max-w-content -z-10 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-none rounded-l-xl active:scale-95"
-                            type="checkbox"
-                            id={product.id.toString()}
-                            value={product.id}
-                            checked={false} // Non-selected items should not be checked
-                            onChange={(event) =>
-                              setSelectedIds([...selectedIds, product.id])
-                            }
-                          />
-                          {product.productname}
-                        </label>
-                      </div>
-                    );
-                  }
-                  return null; // Skip selected items
-                })
+                <motion.div
+                  className="flex flex-row flex-wrap w-full"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="show"
+                >
+                  {filteredProducts.map((product, index) => {
+                    if (!selectedIds.includes(product.id)) {
+                      return (
+                        <motion.div
+                          whileHover={{
+                            scale: 1.1,
+                          }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 200,
+                            damping: 17,
+                          }}
+                          whileTap={{ scale: 0.95 }}
+                          variants={itemVariants}
+                          key={index}
+                          className="relative items-start px-2 mb-2 mr-2 border-2 border-solid border-cta rounded-xl bg-bg"
+                        >
+                          <label htmlFor={product.id.toString()}>
+                            <input
+                              className="absolute left-0 w-10 h-6 appearance-none max-w-content -z-10 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-none rounded-l-xl active:scale-95"
+                              type="checkbox"
+                              id={product.id.toString()}
+                              value={product.id}
+                              checked={false} // Non-selected items should not be checked
+                              onChange={(event) =>
+                                setSelectedIds([...selectedIds, product.id])
+                              }
+                            />
+                            {product.productname}
+                          </label>
+                        </motion.div>
+                      );
+                    }
+                    return null; // Skip selected items
+                  })}
+                </motion.div>
               )}
             </div>
           </div>
