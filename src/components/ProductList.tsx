@@ -99,40 +99,77 @@ const ProductList = () => {
       <div>
         <form>
           <div className="flex flex-row flex-wrap mt-2 mb-10">
-            {products === null ? (
-              <p>Loading products...</p>
-            ) : (
-              products.map((product) => {
-                return (
-                  <div
-                    className="relative p-1 mb-2 mr-2 transition ease-in-out border-2 border-gray-400 border-solid min-w-content rounded-xl hover:bg-fg hover:scale-105 active:bg-header active:scale-95"
-                    key={product.id}
-                  >
-                    <label htmlFor={product.id.toString()}>
-                      <input
-                        className="absolute w-8 h-8 transition ease-in-out bg-white border-2 border-solid appearance-none -top-1 -z-10 shrink-0 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-0 rounded-l-xl hover:bg-fg active:bg-header active:scale-95"
-                        type="checkbox"
-                        id={product.id.toString()}
-                        value={product.id}
-                        checked={selectedIds.includes(product.id)}
-                        onChange={(event) =>
-                          !event.currentTarget.checked
-                            ? setSelectedIds(
+            {/* Selected Items Column */}
+            <div className="flex flex-row flex-wrap w-1/2">
+              {products === null ? (
+                <p>Loading products...</p>
+              ) : (
+                products.map((product) => {
+                  if (selectedIds.includes(product.id)) {
+                    return (
+                      <div
+                        className="relative items-start px-2 mb-2 mr-2 transition ease-in-out border-2 border-solid border-cta rounded-xl hover:scale-105 active:scale-95"
+                        key={product.id}
+                      >
+                        <label htmlFor={product.id.toString()}>
+                          <input
+                            className="absolute left-0 w-10 h-6 transition ease-in-out appearance-none -z-10 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-none rounded-l-xl active:scale-95"
+                            type="checkbox"
+                            id={product.id.toString()}
+                            value={product.id}
+                            checked={true}
+                            onChange={(event) =>
+                              setSelectedIds(
                                 selectedIds.filter((i) => i !== product.id)
                               )
-                            : setSelectedIds([...selectedIds, product.id])
-                        }
-                      />
-                      {product.productname}
-                    </label>
-                  </div>
-                );
-              })
-            )}
+                            }
+                          />
+                          {product.productname}
+                        </label>
+                      </div>
+                    );
+                  }
+                  return null; // Skip non-selected items
+                })
+              )}
+            </div>
+
+            {/* Non-Selected Items Column */}
+            <div className="flex flex-row flex-wrap w-1/2">
+              {products === null ? (
+                <p>Loading products...</p>
+              ) : (
+                products.map((product) => {
+                  if (!selectedIds.includes(product.id)) {
+                    return (
+                      <div
+                        className="relative items-start px-2 mb-2 mr-2 transition ease-in-out border-2 border-solid border-cta rounded-xl hover:scale-105 active:scale-95"
+                        key={product.id}
+                      >
+                        <label htmlFor={product.id.toString()}>
+                          <input
+                            className="absolute left-0 w-10 h-6 transition ease-in-out appearance-none max-w-content -z-10 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-none rounded-l-xl active:scale-95"
+                            type="checkbox"
+                            id={product.id.toString()}
+                            value={product.id}
+                            checked={false} // Non-selected items should not be checked
+                            onChange={(event) =>
+                              setSelectedIds([...selectedIds, product.id])
+                            }
+                          />
+                          {product.productname}
+                        </label>
+                      </div>
+                    );
+                  }
+                  return null; // Skip selected items
+                })
+              )}
+            </div>
           </div>
           <div className="w-100">
             <button
-              className="fixed bottom-0 p-2 pb-8 transition ease-in-out bg-green-300 border-2 border-black border-solid rounded-t-lg active:bg-green-500 active:scale-105 w-60 hover:-translate-y-1 hover:scale-110 hover:bg-green-400"
+              className="fixed bottom-0 p-2 pb-8 transition ease-in-out border-2 border-solid rounded-t-lg border-cta bg-header text-cta active:bg-cta active:text-fg active:scale-105 w-60 hover:-translate-y-1 hover:scale-110 hover:bg-fg hover:text-cta"
               type="button"
               onClick={handleFridgeSubmit}
             >

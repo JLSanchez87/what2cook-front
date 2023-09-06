@@ -5,19 +5,16 @@ import WithToken from "@/components/WithToken";
 const Home = () => {
   return (
     <WithToken>
-      <div className="relative flex flex-col items-center justify-center w-full mx-8 mb-8 bg-center bg-cover -t-4 h-80 rounded-b-2xl bg-landing">
-        <h1>Welcome to your Fridge!</h1>
-        <div className="absolute bottom-0 m-4">
-          Some sort and filter options here
+      <div className="flex flex-col items-center justify-center w-full mx-8 mb-8 bg-center bg-cover rounded-b-2xl bg-fg">
+        <div className="flex flex-col w-full p-8 border-2 border-t-0 rounded-b-2xl border-header">
+          <h1 className="m-auto">Welcome to your Fridge!</h1>
+          <RecipeList />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-8">
-        <div className="flex flex-col p-8 border-2 border-gray-400 border-solid rounded-md">
+      <div className="w-full">
+        <div className="flex flex-col p-8 border-2 border-solid rounded-2xl border-header">
           <h1 className="text-lg font-bold">Fridge List</h1>
           <ProductList />
-        </div>
-        <div className="flex flex-col p-8 border-2 border-gray-400 border-solid rounded-md">
-          <RecipeList />
         </div>
       </div>
     </WithToken>
