@@ -2,21 +2,14 @@ import { Product } from "@/types/Interfaces";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { z } from "zod";
-import { motion, useScroll } from "framer-motion";
-
-// const addToFridgeValidator = z.object({
-//   productId: z.array(z.number().int()),
-// });
-
-// type DataAddToFridgeForm = z.infer<typeof addToFridgeValidator>;
+import { motion } from "framer-motion";
 
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.015,
+      staggerChildren: 0.03,
     },
   },
 };
@@ -24,6 +17,8 @@ const containerVariants = {
 const itemVariants = {
   hidden: { opacity: 0, x: "0px" },
   show: { opacity: 1, x: "0px" },
+  initial: { opacity: 0, y: -20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
 const ProductList = () => {
@@ -34,14 +29,12 @@ const ProductList = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const router = useRouter();
 
-  // Handle changes in the search input
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const query = event.target.value;
     setSearchQuery(query);
 
-    // Filter products based on the search query
     if (products === null) {
       return;
     } else {
@@ -52,16 +45,7 @@ const ProductList = () => {
     }
   };
 
-  // Initialize filteredProducts with products when they are fetched
   useEffect(() => {
-    if (products) {
-      setFilteredProducts(products);
-    }
-  }, [products]);
-
-  // Get and sort the products from the API
-  useEffect(() => {
-    // Get token for localStorage
     const tokenFromLs = localStorage.getItem("token");
 
     if (tokenFromLs) {
@@ -88,7 +72,6 @@ const ProductList = () => {
         setFilteredProducts(sortedProducts);
       }
 
-      // Get a list of ID's of the items in the users fridge
       const initialSelectedIds = userFridgeResponse.data.Fridge.map(
         (item: any) => {
           return item.productId;
@@ -103,28 +86,24 @@ const ProductList = () => {
 
   useEffect(() => {
     if (products) {
-      const sortedProducts = [...products]; // Create a copy of the products array
+      const sortedProducts = [...products];
       sortedProducts.sort((a, b) => {
         const isASelected = selectedIds.includes(a.id);
         const isBSelected = selectedIds.includes(b.id);
 
-        // Sort by checked state
         if (isASelected && !isBSelected) {
-          return -1; // a comes before b
+          return -1;
         } else if (!isASelected && isBSelected) {
-          return 1; // b comes before a
+          return 1;
         }
 
-        // If both are selected or both are not selected, maintain their original order
         return 0;
       });
 
-      // Update the state with the sorted array
       setProducts(sortedProducts);
     }
   }, [selectedIds]);
 
-  // Post an axios request with the token and the value of the selected item
   const handleFridgeSubmit = async () => {
     await axios.post(
       "http://localhost:3001/fridge",
@@ -149,14 +128,12 @@ const ProductList = () => {
             <div className="w-full mb-4">
               <input
                 type="text"
-                placeholder="Search by product name"
+                placeholder="Search by product name..."
                 value={searchQuery}
                 onChange={handleSearchInputChange}
-                className="w-full p-2 border rounded border-header"
+                className="w-full p-1 border-b border-header"
               />
             </div>
-
-            {/* Non-Selected Items Column */}
             <div className="w-1/2 p-4 pr-2 border-2 border-r-0 border-cta rounded-l-xl">
               <p className="mb-4">Items in your fridge:</p>
               {filteredProducts.length === 0 ? (
@@ -169,7 +146,7 @@ const ProductList = () => {
                   animate="show"
                 >
                   {filteredProducts.map((product, index) => {
-                    if (!selectedIds.includes(product.id)) {
+                    if (selectedIds.includes(product.id)) {
                       return (
                         <motion.div
                           whileHover={{
@@ -206,13 +183,12 @@ const ProductList = () => {
                         </motion.div>
                       );
                     }
-                    return null; // Skip non-selected items
+                    return null;
                   })}
                 </motion.div>
               )}
             </div>
 
-            {/* Non-Selected Items Column */}
             <div className="w-1/2 p-4 pl-2 border-2 border-l-0 border-cta bg-fg rounded-r-xl">
               <p className="mb-4">Add these items:</p>
               {filteredProducts.length === 0 ? (
@@ -247,7 +223,7 @@ const ProductList = () => {
                               type="checkbox"
                               id={product.id.toString()}
                               value={product.id}
-                              checked={false} // Non-selected items should not be checked
+                              checked={false}
                               onChange={(event) =>
                                 setSelectedIds([...selectedIds, product.id])
                               }
@@ -257,7 +233,7 @@ const ProductList = () => {
                         </motion.div>
                       );
                     }
-                    return null; // Skip selected items
+                    return null;
                   })}
                 </motion.div>
               )}

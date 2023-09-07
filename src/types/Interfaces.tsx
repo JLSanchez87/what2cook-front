@@ -41,8 +41,22 @@ export interface Recipe {
   instructions: string;
   prepTime?: number;
   serves?: number;
-  category: Category[];
-  ingredients: ProductOnRecipe[];
+  category: [
+    {
+      categoryname: string;
+      categoryImg: string;
+    }
+  ];
+  ingredients: {
+    id: number;
+    product: [
+      {
+        id: number;
+        productname: string;
+        portionSize: number;
+      }
+    ];
+  };
 }
 
 export interface Category {

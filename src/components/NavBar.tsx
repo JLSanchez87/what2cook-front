@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Logo from "./Logo";
 
 const NavBar = () => {
   const [token, setToken] = useState<null | string>(null);
@@ -49,9 +50,12 @@ const NavBar = () => {
 
   return (
     <nav className="flex flex-row justify-between p-8 rounded-b-3xl bg-header">
-      <h1 className="text-2xl font-bold drop-shadow-lg font-lobster">
-        🧑🏻‍🍳what2cook
-      </h1>
+      <div className="flex flex-row items-baseline">
+        <Logo height="1.8rem" />
+        <p className="z-10 mb-4 ml-1 text-3xl font-lobster text-cta">
+          what2cook
+        </p>
+      </div>
       <div className="flex flex-row">
         <span className="mx-4 transition ease-in-out delay-100 hover:scale-105 hover:underline-offset-4">
           <Link href="/">My fridge</Link>

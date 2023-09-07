@@ -7,6 +7,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoginForm from "./LoginForm";
 import Register from "./Register";
+import Logo from "./Logo";
 
 const Welcome = () => {
   return (
@@ -18,12 +19,15 @@ const Welcome = () => {
           opacity: 0.1,
         }}
       />
-      <h1 className="z-10 pt-10 font-serif text-2xl text-fg">
+      <h1 className="z-10 pt-10 mb-4 font-serif text-xl text-fg">
         The app for people who don't know..
       </h1>
-      <p className="z-10 mb-10 font-bold font-lobster text-7xl text-cta">
-        🧑🏻‍🍳what2cook
-      </p>
+      <div className="flex flex-row items-baseline">
+        <Logo height="4rem" />
+        <p className="z-10 mb-5 ml-2 text-7xl font-lobster text-cta">
+          what2cook
+        </p>
+      </div>
       <p className="z-10 mb-8 text-6xl font-bold font-lobster text-amber-400">
         🍔 🍖 🍗 🍝
         <br />

@@ -1,11 +1,21 @@
 import Wrapper from "@/components/Wrapper";
-import { ProductOnRecipe, Recipe } from "@/types/Interfaces";
+import { Product, ProductOnRecipe, Recipe } from "@/types/Interfaces";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useDebugValue, useEffect, useState } from "react";
+
+interface Ingredient {
+  id: number;
+  product: {
+    id: number;
+    productname: string;
+    portionSize: number;
+  };
+}
 
 const Recipe = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const router = useRouter();
   const recipeIdFromUrl = router.query.recipeId;
 
@@ -27,6 +37,18 @@ const Recipe = () => {
     getRecipeFromApi();
   }, [recipeIdFromUrl]);
 
+  useEffect(() => {
+    const getProductFromApi = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/products");
+        setProduct(response.data);
+      } catch (error) {
+        console.log("Error fetching recipe:", error);
+      }
+    };
+    getProductFromApi();
+  }, []);
+
   if (recipe === null) {
     return <p>Loading recipe, please wait...</p>;
   }
@@ -34,17 +56,36 @@ const Recipe = () => {
   return (
     <Wrapper>
       <div key={recipe.id}>
-        <img src={recipe.recipeImg} />
-        <div>
-          <span>{recipe.recipename}</span>
-          <span>{recipe.description}</span>
+        <div className="flex flex-row flex-wrap items-end justify-between mt-10 mb-4">
+          <span className="text-4xl underline font-lobster">
+            {recipe.recipename}
+          </span>{" "}
           <div>
-            <span>{recipe.prepTime}</span>
-            <span>{recipe.serves}</span>
+            <span className="mr-8">
+              Time to cook: {recipe.prepTime} minutes
+            </span>
+            <span>
+              Serves:
+              {recipe.serves === undefined
+                ? "no serving ☹️"
+                : "👤".repeat(recipe.serves)}
+            </span>
           </div>
-          <div>
-            <div>{recipe.instructions}</div>
-            <div>Ingredients</div>
+        </div>
+        <p>{recipe.description}</p>
+        <img
+          className="mx-auto my-4 border-4 border-dashed w-100 border-header rounded-3xl md:w-2/3"
+          src={recipe.recipeImg}
+        />
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="pr-2">
+              <p className="mb-4 font-lobster">Instructions</p>
+              <p className="mb-4">{recipe.instructions}</p>
+            </div>
+            <div className="pl-2 border-t-2 md:border-l-2 md:border-t-0 border-header">
+              <p className="mb-4 font-lobster">Ingredients</p>
+            </div>
           </div>
         </div>
       </div>

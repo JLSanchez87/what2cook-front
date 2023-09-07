@@ -13,6 +13,7 @@ const Home = () => {
       <div className="w-full">
         <div className="flex flex-col items-center p-8 border-2 border-solid rounded-2xl border-header">
           <h1 className="text-lg font-bold">Your Fridge</h1>
+          <p>Click on the items to add or remove to/from your fridge</p>
           <ProductList />
         </div>
       </div>

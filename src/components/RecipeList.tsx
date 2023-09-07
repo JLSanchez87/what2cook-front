@@ -70,7 +70,7 @@ const RecipeList = () => {
         <div key={randomRecipe.id}>
           <h1 className="text-lg font-bold">Recipe List</h1>
           <div
-            className="flex flex-col items-center justify-center h-48 my-4 bg-center bg-cover bg-header rounded-2xl"
+            className="flex flex-col items-center justify-center my-4 bg-center bg-cover h-96 bg-header rounded-2xl"
             style={{ backgroundImage: `url(${randomRecipe.recipeImg})` }}
           >
             <h2 className="p-2 text-lg font-bold rounded-lg bg-header">
