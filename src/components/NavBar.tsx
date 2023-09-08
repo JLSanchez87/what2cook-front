@@ -51,7 +51,7 @@ const NavBar = () => {
   const handleClick = () => {
     localStorage.removeItem("token");
     setToken(null);
-    // router.push("/");
+    router.push("/");
     window.location.reload();
   };
 
