@@ -61,12 +61,14 @@ const NavBar = () => {
 
   return (
     <nav className="flex flex-row justify-between p-4 md:p-8 md:rounded-b-3xl bg-header">
-      <div className="flex flex-row items-baseline">
-        <Logo height="1.8rem" />
-        <p className="z-10 mb-4 ml-1 text-3xl font-lobster text-cta">
-          what2cook
-        </p>
-      </div>
+      <Link href="/">
+        <div className="flex flex-row items-baseline">
+          <Logo height="1.8rem" />
+          <p className="z-10 mb-4 ml-1 text-3xl font-lobster text-cta">
+            what2cook
+          </p>
+        </div>
+      </Link>
 
       <div className="hidden text-lg md:flex md:flex-row">
         <span className="mx-4 transition ease-in-out hover:underline hover:scale-105">
