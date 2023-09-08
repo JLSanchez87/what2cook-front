@@ -139,7 +139,7 @@ const ProductList = () => {
         <form className="min-h-screen">
           <div className="flex flex-col flex-wrap mt-4 mb-10 md:px-8 md:flex-row around">
             <div
-              className="sticky top-0 z-50 w-full mb-4"
+              className="sticky top-0 z-40 w-full mb-4"
               ref={searchContainerRef}
             >
               <input
@@ -256,9 +256,9 @@ const ProductList = () => {
               )}
             </div>
           </div>
-          <div className="w-100">
+          <div className="w-100 md:pl-8">
             <button
-              className="fixed bottom-0 p-2 pb-8 transition ease-in-out border-2 border-solid rounded-t-lg border-cta bg-header text-cta active:bg-cta active:text-fg active:scale-105 w-60 hover:-translate-y-1 hover:scale-110 hover:bg-fg hover:text-cta"
+              className="fixed bottom-0 z-50 p-2 pb-8 transition ease-in-out border-2 border-solid rounded-t-lg border-cta bg-header text-cta active:bg-cta active:text-fg active:scale-105 w-60 hover:-translate-y-1 hover:scale-110 hover:bg-fg hover:text-cta"
               type="button"
               onClick={handleFridgeSubmit}
             >
