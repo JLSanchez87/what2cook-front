@@ -46,6 +46,7 @@ const ProductList = () => {
     }
   };
 
+  // Get token from Ls and sort products
   useEffect(() => {
     const tokenFromLs = localStorage.getItem("token");
 
@@ -88,6 +89,7 @@ const ProductList = () => {
     getProductsFromApi();
   }, []);
 
+  // Re-sort the sorted products while checking checked state. If checked it will send the product to the other column
   useEffect(() => {
     if (products) {
       const sortedProducts = [...products];
@@ -105,8 +107,9 @@ const ProductList = () => {
 
       setProducts(sortedProducts);
     }
-  }, [products, selectedIds]);
+  }, [/* products, */ selectedIds]);
 
+  // Search input
   useEffect(() => {
     const searchInput = document.getElementById("searchInput");
 
@@ -117,6 +120,7 @@ const ProductList = () => {
     }
   }, []);
 
+  // Send post request to the backend and send token auth with it
   const handleFridgeSubmit = async () => {
     await axios.post(
       `${process.env["NEXT_PUBLIC_API_URL"]}/fridge`,
