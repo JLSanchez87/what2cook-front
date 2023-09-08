@@ -105,7 +105,7 @@ const ProductList = () => {
 
       setProducts(sortedProducts);
     }
-  }, [selectedIds]);
+  }, [products, selectedIds]);
 
   useEffect(() => {
     const searchInput = document.getElementById("searchInput");

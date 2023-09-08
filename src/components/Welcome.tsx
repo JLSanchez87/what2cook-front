@@ -20,7 +20,7 @@ const Welcome = () => {
         }}
       />
       <h1 className="z-10 pt-10 mb-4 font-serif text-xl text-fg">
-        The app for people who don't know..
+        The app for people who don&apos;t know..
       </h1>
       <div className="flex flex-row items-baseline">
         <Logo height="4rem" />

@@ -92,7 +92,7 @@ const RecipeList = () => {
         ) : (
           recipes.map((recipe) => {
             return (
-              <Link href={`recipes/${recipe.id}`}>
+              <Link key={recipe.id} href={`recipes/${recipe.id}`}>
                 <div
                   key={recipe.id}
                   className="flex flex-row around w-[300px] mr-4 border-2 border-solid border-header rounded-xl drop-shadow-lg scroll-m-3 snap-start"

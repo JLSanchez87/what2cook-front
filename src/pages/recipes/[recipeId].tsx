@@ -52,7 +52,11 @@ const Recipe = () => {
             </span>
             <br />
             {recipe.category.map((category) => (
-              <Badge className="w-auto mt-2" variant={"default"}>
+              <Badge
+                key={recipe.id}
+                className="w-auto mt-2"
+                variant={"default"}
+              >
                 {category.categoryname}
               </Badge>
             ))}
@@ -74,6 +78,7 @@ const Recipe = () => {
         <img
           className="mx-auto my-4 border-2 w-100 border-header rounded-3xl md:w-2/3"
           src={recipe.recipeImg}
+          alt={recipe.description}
         />
         <div>
           <div className="grid grid-cols-1 m-auto md:grid-cols-3 md:w-2/3">
