@@ -28,11 +28,14 @@ const NavBar = () => {
     const getUserInfo = async () => {
       if (token) {
         try {
-          const response = await axios.get("http://localhost:3001/me", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          const response = await axios.get(
+            `${process.env["NEXT_PUBLIC_API_URL"]}/me`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
           const userData = response.data;
           setUser(userData);
         } catch (error) {
@@ -57,7 +60,7 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="flex flex-row justify-between p-8 md:rounded-b-3xl bg-header">
+    <nav className="flex flex-row justify-between p-4 md:p-8 md:rounded-b-3xl bg-header">
       <div className="flex flex-row items-baseline">
         <Logo height="1.8rem" />
         <p className="z-10 mb-4 ml-1 text-3xl font-lobster text-cta">
@@ -65,18 +68,18 @@ const NavBar = () => {
         </p>
       </div>
 
-      <div className="hidden md:flex md:flex-row">
-        <span className="mx-4 transition ease-in-out delay-100 hover:scale-105 hover:underline-offset-4">
+      <div className="hidden text-lg md:flex md:flex-row">
+        <span className="mx-4 transition ease-in-out hover:underline hover:scale-105">
           <Link href="/">My fridge</Link>
         </span>
-        <span className="mx-4">
+        <span className="mx-4 transition ease-in-out hover:underline hover:scale-105">
           {token ? (
-            <Link href="/account">{user.username}</Link>
+            <Link href="/">{user.username}</Link>
           ) : (
             <Link href="/register">Register</Link>
           )}
         </span>
-        <span className="mx-4">
+        <span className="mx-4 font-bold transition ease-in-out hover:underline hover:scale-110">
           {token ? (
             <Link href="/" onClick={handleClick}>
               Logout
@@ -128,7 +131,7 @@ const NavBar = () => {
             <DropdownMenuLabel>
               <span>
                 {token ? (
-                  <Link href="/account">{user.username}</Link>
+                  <Link href="/">{user.username}</Link>
                 ) : (
                   <Link href="/register">Register</Link>
                 )}

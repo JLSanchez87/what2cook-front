@@ -26,11 +26,14 @@ const Registration = () => {
     data: DataFromRegistrationForm
   ) => {
     try {
-      const response = await axios.post("http://localhost:3001/register", {
-        username: data.username,
-        password: data.password,
-        email: data.email,
-      });
+      const response = await axios.post(
+        `${process.env["NEXT_PUBLIC_API_URL"]}/register`,
+        {
+          username: data.username,
+          password: data.password,
+          email: data.email,
+        }
+      );
       router.push("/");
       window.location.href = "/";
     } catch (error) {

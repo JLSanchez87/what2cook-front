@@ -28,7 +28,7 @@ const Recipe = () => {
     const getRecipeFromApi = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/recipes/${recipeIdFromUrl}`
+          `${process.env["NEXT_PUBLIC_API_URL"]}/recipes/${recipeIdFromUrl}`
         );
         setRecipe(response.data);
       } catch (error) {
@@ -38,39 +38,27 @@ const Recipe = () => {
     getRecipeFromApi();
   }, [recipeIdFromUrl]);
 
-  // useEffect(() => {
-  //   const getProductFromApi = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:3001/products");
-  //       setProduct(response.data);
-  //     } catch (error) {
-  //       console.log("Error fetching recipe:", error);
-  //     }
-  //   };
-  //   getProductFromApi();
-  // }, []);
-
   if (recipe === null) {
     return <p>Loading recipe, please wait...</p>;
   }
 
   return (
     <Wrapper>
-      <div key={recipe.id}>
-        <div className="flex flex-row flex-wrap items-end justify-between mt-10 mb-4">
-          <div>
+      <div className="mx-2" key={recipe.id}>
+        <div className="flex flex-row flex-wrap items-end justify-between mt-10 mb-4 md:mx-auto md:w-2/3">
+          <div className="mb-4">
             <span className="text-4xl underline font-lobster">
               {recipe.recipename}
             </span>
             <br />
             {recipe.category.map((category) => (
-              <Badge className="w-auto" variant={"default"}>
+              <Badge className="w-auto mt-2" variant={"default"}>
                 {category.categoryname}
               </Badge>
             ))}
           </div>
-          <div>
-            <span className="mr-8">
+          <div className="flex justify-between w-full mb-4 md:w-auto md:justify-end">
+            <span className="md:mr-8">
               Time to cook: {recipe.prepTime} minutes
             </span>
             <span>
@@ -80,19 +68,20 @@ const Recipe = () => {
                 : "👤".repeat(recipe.serves)}
             </span>
           </div>
+          <p>{recipe.description}</p>
         </div>
-        <p>{recipe.description}</p>
+
         <img
-          className="mx-auto my-4 border-4 border-dashed w-100 border-header rounded-3xl md:w-2/3"
+          className="mx-auto my-4 border-2 w-100 border-header rounded-3xl md:w-2/3"
           src={recipe.recipeImg}
         />
         <div>
           <div className="grid grid-cols-1 m-auto md:grid-cols-3 md:w-2/3">
-            <div className="col-span-2 pr-2">
-              <p className="mb-4 font-lobster">Instructions</p>
+            <div className="col-span-2 md:pr-2">
+              <p className="mb-4 font-lobster">Do the cooking by the book!</p>
               <p className="mb-4">{recipe.instructions}</p>
             </div>
-            <div className="pl-2 border-t-2 md:border-l-2 md:border-t-0 border-header">
+            <div className="border-t-2 md:pl-2 md:border-l-2 md:border-t-0 border-header">
               <p className="mb-4 font-lobster">Ingredients</p>
               <ul>
                 {recipe.ingredients.map((ingredient) => (

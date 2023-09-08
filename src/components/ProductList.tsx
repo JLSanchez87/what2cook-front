@@ -1,7 +1,7 @@
 import { Product } from "@/types/Interfaces";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 const containerVariants = {
@@ -27,6 +27,7 @@ const ProductList = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const searchContainerRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
 
   const handleSearchInputChange = (
@@ -54,13 +55,16 @@ const ProductList = () => {
 
     const getProductsFromApi = async () => {
       const productsResponse = await axios.get(
-        "http://localhost:3001/products"
+        `${process.env["NEXT_PUBLIC_API_URL"]}/products`
       );
-      const userFridgeResponse = await axios.get("http://localhost:3001/me", {
-        headers: {
-          Authorization: `Bearer ${tokenFromLs}`,
-        },
-      });
+      const userFridgeResponse = await axios.get(
+        `${process.env["NEXT_PUBLIC_API_URL"]}/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenFromLs}`,
+          },
+        }
+      );
 
       const sortedProducts = productsResponse.data.sort(
         (a: Product, b: Product) => a.productname.localeCompare(b.productname)
@@ -96,7 +100,6 @@ const ProductList = () => {
         } else if (!isASelected && isBSelected) {
           return 1;
         }
-
         return 0;
       });
 
@@ -104,9 +107,19 @@ const ProductList = () => {
     }
   }, [selectedIds]);
 
+  useEffect(() => {
+    const searchInput = document.getElementById("searchInput");
+
+    if (searchInput && searchContainerRef.current) {
+      searchInput.addEventListener("click", () => {
+        searchContainerRef.current?.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+  }, []);
+
   const handleFridgeSubmit = async () => {
     await axios.post(
-      "http://localhost:3001/fridge",
+      `${process.env["NEXT_PUBLIC_API_URL"]}/fridge`,
       {
         productId: selectedIds,
       },
@@ -123,15 +136,19 @@ const ProductList = () => {
   return (
     <>
       <div>
-        <form>
-          <div className="flex flex-col flex-wrap mt-4 mb-10 md:flex-row around">
-            <div className="sticky top-0 z-50 w-full mb-4">
+        <form className="min-h-screen">
+          <div className="flex flex-col flex-wrap mt-4 mb-10 md:px-8 md:flex-row around">
+            <div
+              className="sticky top-0 z-50 w-full mb-4"
+              ref={searchContainerRef}
+            >
               <input
                 type="text"
                 placeholder="Search by product name..."
                 value={searchQuery}
                 onChange={handleSearchInputChange}
                 className="relative w-full p-1 border-b-2 border-header bg-bg"
+                id="searchInput"
               />
             </div>
             <div className="p-4 pr-2 md:border-2 md:border-r-0 md:w-1/2 border-cta rounded-l-xl">

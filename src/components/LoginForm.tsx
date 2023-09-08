@@ -25,10 +25,13 @@ const LoginForm = () => {
   const router = useRouter();
   const handleLoginFormSubmit = async (data: DataFromLoginForm) => {
     try {
-      const response = await axios.post("http://localhost:3001/login", {
-        username: data.username,
-        password: data.password,
-      });
+      const response = await axios.post(
+        `${process.env["NEXT_PUBLIC_API_URL"]}/login`,
+        {
+          username: data.username,
+          password: data.password,
+        }
+      );
       localStorage.setItem("token", response.data.token);
       router.push("/");
       window.location.href = "/";

@@ -19,7 +19,7 @@ const RecipeList = () => {
     const getRecipeIdFromApi = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/compare-products",
+          `${process.env["NEXT_PUBLIC_API_URL"]}/compare-products`,
           {
             headers: {
               Authorization: `Bearer ${tokenFromLs}`,
@@ -32,7 +32,7 @@ const RecipeList = () => {
 
         // Get the recipes
         const matchingRecipes = await axios.get(
-          "http://localhost:3001/recipes"
+          `${process.env["NEXT_PUBLIC_API_URL"]}/recipes`
         );
 
         // filter our the recipes that doesn't correspond with the comparison endpoint
@@ -52,7 +52,9 @@ const RecipeList = () => {
   useEffect(() => {
     const getRandomRecipeFromApi = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/recipe/random");
+        const response = await axios.get(
+          `${process.env["NEXT_PUBLIC_API_URL"]}/recipe/random`
+        );
         setRandomRecipe(response.data);
       } catch (error) {
         console.log("Error fetching recipe:", error);
