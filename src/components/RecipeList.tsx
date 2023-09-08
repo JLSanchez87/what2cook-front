@@ -9,7 +9,6 @@ const RecipeList = () => {
   const [token, setToken] = useState<null | string>(null);
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
   const [randomRecipe, setRandomRecipe] = useState<Recipe | null>(null);
-  const { scrollXProgress } = useScroll();
 
   useEffect(() => {
     const tokenFromLs = localStorage.getItem("token");
@@ -85,14 +84,17 @@ const RecipeList = () => {
           <p>other available recipes:</p>
         </div>
       )}
-      <ScrollArea className="flex flex-row w-full p-4 overflow-auto border rounded-2xl snap-x">
+      <ScrollArea className="flex flex-row w-full p-4 overflow-auto md:border rounded-2xl snap-x">
         {recipes === null ? (
           <p>Loading recipes..</p>
         ) : (
           recipes.map((recipe) => {
             return (
               <Link href={`recipes/${recipe.id}`}>
-                <div className="flex flex-row around w-[350px] mr-4 border-2 border-solid border-header rounded-xl drop-shadow-lg scroll-m-4 snap-start">
+                <div
+                  key={recipe.id}
+                  className="flex flex-row around w-[300px] mr-4 border-2 border-solid border-header rounded-xl drop-shadow-lg scroll-m-3 snap-start"
+                >
                   <img
                     className="object-cover object-center w-20 h-20 border-2 border-dashed border-header rounded-xl"
                     src={recipe.recipeImg}
@@ -101,7 +103,7 @@ const RecipeList = () => {
                   <div className="flex flex-col w-full p-4 text-cta">
                     <span className="font-bold">{recipe.recipename}</span>
                     <div className="flex flex-row justify-between">
-                      <span>prep⏲: {recipe.prepTime}mins</span>
+                      <span>⏲: {recipe.prepTime}mins</span>
                       <span>
                         {recipe.serves === undefined
                           ? "no serving ☹️"

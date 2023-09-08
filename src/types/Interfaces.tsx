@@ -47,16 +47,14 @@ export interface Recipe {
       categoryImg: string;
     }
   ];
-  ingredients: {
-    id: number;
-    product: [
-      {
-        id: number;
+  ingredients: [
+    {
+      id: number;
+      product: {
         productname: string;
-        portionSize: number;
-      }
-    ];
-  };
+      };
+    }
+  ];
 }
 
 export interface Category {

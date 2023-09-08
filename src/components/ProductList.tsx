@@ -124,17 +124,17 @@ const ProductList = () => {
     <>
       <div>
         <form>
-          <div className="flex flex-row flex-wrap mt-4 mb-10 around">
-            <div className="w-full mb-4">
+          <div className="flex flex-col flex-wrap mt-4 mb-10 md:flex-row around">
+            <div className="sticky top-0 z-50 w-full mb-4">
               <input
                 type="text"
                 placeholder="Search by product name..."
                 value={searchQuery}
                 onChange={handleSearchInputChange}
-                className="w-full p-1 border-b border-header"
+                className="relative w-full p-1 border-b-2 border-header bg-bg"
               />
             </div>
-            <div className="w-1/2 p-4 pr-2 border-2 border-r-0 border-cta rounded-l-xl">
+            <div className="p-4 pr-2 md:border-2 md:border-r-0 md:w-1/2 border-cta rounded-l-xl">
               <p className="mb-4">Items in your fridge:</p>
               {filteredProducts.length === 0 ? (
                 <p>No matching products found...</p>
@@ -189,7 +189,7 @@ const ProductList = () => {
               )}
             </div>
 
-            <div className="w-1/2 p-4 pl-2 border-2 border-l-0 border-cta bg-fg rounded-r-xl">
+            <div className="p-4 pl-2 md:w-1/2 md:border-2 md:border-l-0 border-cta bg-fg md:rounded-r-xl">
               <p className="mb-4">Add these items:</p>
               {filteredProducts.length === 0 ? (
                 <p>No matching products found...</p>
