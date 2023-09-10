@@ -107,7 +107,7 @@ const ProductList = () => {
 
       setProducts(sortedProducts);
     }
-  }, [/* products, */ selectedIds]);
+  }, [selectedIds]);
 
   // Search input
   useEffect(() => {
@@ -139,11 +139,11 @@ const ProductList = () => {
 
   return (
     <>
-      <div>
-        <form className="min-h-screen">
-          <div className="flex flex-col flex-wrap mt-4 mb-10 md:px-8 md:flex-row around">
+      <div className="w-full">
+        <form className="w-full min-h-screen">
+          <div className="grid mt-4 mb-10 md:grid-cols-2 md:px-8 around">
             <div
-              className="sticky top-0 z-40 w-full mb-4"
+              className="sticky top-0 z-40 w-full mb-4 md:col-span-2 "
               ref={searchContainerRef}
             >
               <input
@@ -155,7 +155,7 @@ const ProductList = () => {
                 id="searchInput"
               />
             </div>
-            <div className="p-4 pr-2 md:border-2 md:border-r-0 md:w-1/2 border-cta rounded-l-xl">
+            <div className="col-span-1 p-4 pr-2 md:border-2 md:border-r-0 md:w-full border-cta rounded-l-xl">
               <p className="mb-4">Items in your fridge:</p>
               {filteredProducts.length === 0 ? (
                 <p>No matching products found...</p>
@@ -210,7 +210,7 @@ const ProductList = () => {
               )}
             </div>
 
-            <div className="p-4 pl-2 md:w-1/2 md:border-2 md:border-l-0 border-cta bg-fg md:rounded-r-xl">
+            <div className="col-span-1 p-4 pl-2 md:w-full md:border-2 md:border-l-0 border-cta bg-fg md:rounded-r-xl">
               <p className="mb-4">Add these items:</p>
               {filteredProducts.length === 0 ? (
                 <p>No matching products found...</p>
