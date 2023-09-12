@@ -11,7 +11,7 @@ import Logo from "./Logo";
 
 const Welcome = () => {
   return (
-    <main className="flex flex-col items-center min-h-screen bg-fixed bg-center bg-cover bg-gradient-to-b from-[var(--header)] to-[var(--div-color)]">
+    <main className="flex flex-col items-center container min-h-screen bg-fixed bg-center bg-cover bg-gradient-to-b from-[var(--header)] to-[var(--div-color)]">
       <div
         className="absolute z-10 w-screen min-h-screen bg-fixed bg-center bg-cover"
         style={{

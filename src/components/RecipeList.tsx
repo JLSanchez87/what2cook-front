@@ -3,7 +3,6 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { motion, useScroll } from "framer-motion";
 
 const RecipeList = () => {
   const [token, setToken] = useState<null | string>(null);
@@ -50,23 +49,16 @@ const RecipeList = () => {
   }, []);
 
   useEffect(() => {
-    const getRandomRecipeFromApi = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env["NEXT_PUBLIC_API_URL"]}/recipe/random`
-        );
-        setRandomRecipe(response.data);
-      } catch (error) {
-        console.log("Error fetching recipe:", error);
-      }
-    };
-    getRandomRecipeFromApi();
-  }, []);
+    if (recipes && recipes.length > 0) {
+      const randomIndex = Math.floor(Math.random() * recipes.length);
+      setRandomRecipe(recipes[randomIndex]);
+    }
+  }, [recipes]);
 
   return (
     <div>
       {randomRecipe === null ? (
-        <p>Loading random recipe..</p>
+        <p>Loading random recipe...</p>
       ) : (
         <div key={randomRecipe.id}>
           <h1 className="text-lg font-bold">Recipe List</h1>
@@ -86,7 +78,8 @@ const RecipeList = () => {
           <p>other available recipes:</p>
         </div>
       )}
-      <ScrollArea className="flex flex-row w-full p-4 overflow-auto md:border rounded-2xl snap-x">
+
+      <ScrollArea className="flex flex-row w-full p-4 overflow-auto md:border-0 rounded-2xl snap-x">
         {recipes === null ? (
           <p>Loading recipes..</p>
         ) : (
