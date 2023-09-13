@@ -1,22 +1,13 @@
 import Wrapper from "@/components/Wrapper";
-import { Recipe } from "@/types/Interfaces";
+import { ProductOnUser, Recipe } from "@/types/Interfaces";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 
-interface Ingredient {
-  id: number;
-  product: {
-    id: number;
-    productname: string;
-    portionSize: number;
-  };
-}
-
 const Recipe = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
-  // const [product, setProduct] = useState<Product[] | null>(null);
+  const [token, setToken] = useState<null | string>(null);
   const router = useRouter();
   const recipeIdFromUrl = router.query.recipeId;
 
@@ -37,6 +28,66 @@ const Recipe = () => {
     };
     getRecipeFromApi();
   }, [recipeIdFromUrl]);
+
+  // get token auth from Ls
+  useEffect(() => {
+    const tokenFromLs = localStorage.getItem("token");
+
+    if (tokenFromLs) {
+      setToken(tokenFromLs);
+    }
+  }, []);
+
+  const handleRecipeEaten = async () => {
+    if (!recipe || !recipe.ingredients || !Array.isArray(recipe.ingredients)) {
+      return; // Handle invalid cases
+    }
+
+    // Fetch the user's inventory
+    try {
+      const response = await axios.get(
+        `${process.env["NEXT_PUBLIC_API_URL"]}/fridge`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const userInventory: ProductOnUser[] = response.data;
+
+      // Map recipeIngredients to unique IDs in user's inventory
+      const uniqueIdsToDelete = recipe.ingredients.map((ingredient) => {
+        const matchingInventoryItem = userInventory.find(
+          (inventoryItem: ProductOnUser) =>
+            inventoryItem.productId === ingredient.productId
+        ) as ProductOnUser;
+        return matchingInventoryItem ? matchingInventoryItem.id : null;
+      });
+
+      // Filter out any null values (items not found in inventory)
+      const filteredUniqueIds = uniqueIdsToDelete.filter((id) => id !== null);
+
+      if (filteredUniqueIds.length === 0) {
+        console.log("No matching items found in the user's inventory.");
+        return;
+      }
+
+      // Send a delete request with the filtered unique IDs
+      await axios.delete(`${process.env["NEXT_PUBLIC_API_URL"]}/fridge`, {
+        data: {
+          id: filteredUniqueIds,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Items removed from the fridge successfully.");
+    } catch (error) {
+      console.error("Error handling recipe eaten:", error);
+    }
+    router.push("/");
+    window.location.href = "/";
+  };
 
   if (recipe === null) {
     return <p>Loading recipe, please wait...</p>;
@@ -93,6 +144,14 @@ const Recipe = () => {
                   <li key={ingredient.id}>{ingredient.product.productname}</li>
                 ))}
               </ul>
+              <form onSubmit={handleRecipeEaten}>
+                <button
+                  className="p-2 mt-2 border-2 border-btn bg-header rounded-xl"
+                  type="submit"
+                >
+                  Remove ingredients from Fridge
+                </button>
+              </form>
             </div>
           </div>
         </div>

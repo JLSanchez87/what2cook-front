@@ -58,7 +58,20 @@ const RecipeList = () => {
   return (
     <div>
       {randomRecipe === null ? (
-        <p>Loading random recipe...</p>
+        <div>
+          <div
+            className="flex flex-col items-center justify-center my-4 bg-center bg-cover h-96 bg-header rounded-2xl"
+            style={{ backgroundImage: 'url("/landing-bg.jpg")' }}
+          >
+            <h2 className="p-2 text-lg font-bold rounded-lg bg-header">
+              Welcome to your Fridge
+            </h2>
+            <p className="p-2 rounded-b-lg bg-header">
+              Your recommended recipes will be shown here
+            </p>
+          </div>
+          <p>Please add (more) items in your Fridge</p>
+        </div>
       ) : (
         <div key={randomRecipe.id}>
           <h1 className="text-lg font-bold">Recipe List</h1>

@@ -49,8 +49,10 @@ export interface Recipe {
   ];
   ingredients: [
     {
+      productId: number;
       id: number;
       product: {
+        id: number;
         productname: string;
       };
     }
