@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 const Recipe = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [token, setToken] = useState<null | string>(null);
+  const [isRemoved, setIsRemoved] = useState(false);
   const router = useRouter();
   const recipeIdFromUrl = router.query.recipeId;
 
@@ -81,12 +82,13 @@ const Recipe = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+
       console.log("Items removed from the fridge successfully.");
+
+      setIsRemoved(true);
     } catch (error) {
       console.error("Error handling recipe eaten:", error);
     }
-    router.push("/");
-    window.location.href = "/";
   };
 
   if (recipe === null) {
@@ -144,14 +146,19 @@ const Recipe = () => {
                   <li key={ingredient.id}>{ingredient.product.productname}</li>
                 ))}
               </ul>
-              <form onSubmit={handleRecipeEaten}>
-                <button
-                  className="p-2 mt-2 border-2 border-btn bg-header rounded-xl"
-                  type="submit"
-                >
-                  Remove ingredients from Fridge
-                </button>
-              </form>
+              <div>
+                <form onSubmit={handleRecipeEaten}>
+                  <button
+                    className="p-2 mt-2 border-2 border-btn bg-header rounded-xl"
+                    type="submit"
+                    disabled={isRemoved}
+                  >
+                    {isRemoved
+                      ? "Items removed"
+                      : "Remove ingredients from Fridge"}
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
