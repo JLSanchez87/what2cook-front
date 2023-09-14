@@ -21,17 +21,17 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--header);
+  background: var(--lilia);
   border-radius: 0.5rem;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--cta);
+  background: var(--raven);
 }
 
 body {
-  color: var(--cta);
+  color: var(--dark-text);
 }
 
 @layer base {
@@ -66,11 +66,12 @@ body {
 
     --radius: 0.5rem;
 
-    --bg-color: #fbf9f1;
-    --div-color: #e7eaa8;
-    --header: #b4bb72;
-    --cta: #2a6049;
-    --btn: #6aac56;
+    --raven: #373d3f;
+    --lilia: #f2f3f4;
+    --dark-alice: #107896;
+    --ruby: #c02f1d;
+    --kelly: #a3b86c;
+    --dark-indigo: #093145;
   }
 
   .dark {

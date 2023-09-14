@@ -151,12 +151,12 @@ const ProductList = () => {
                 placeholder="Search by product name..."
                 value={searchQuery}
                 onChange={handleSearchInputChange}
-                className="relative w-full p-1 border-b-2 border-header bg-bg"
+                className="relative w-full h-12 p-1 border-b-2 bg-background border-header"
                 id="searchInput"
               />
             </div>
-            <div className="col-span-1 p-4 pr-2 md:border-2 md:border-r-0 md:w-full border-cta rounded-l-xl">
-              <p className="mb-4">Items in your fridge:</p>
+            <div className="col-span-1 p-4 pr-2 md:border-2 md:border-r-0 md:w-full bg-background border-kelly rounded-l-xl">
+              <p className="mb-4">Your inventory:</p>
               {filteredProducts.length === 0 ? (
                 <p>No matching products found...</p>
               ) : (
@@ -181,14 +181,14 @@ const ProductList = () => {
                           whileTap={{ scale: 0.95 }}
                           variants={itemVariants}
                           key={index}
-                          className="relative items-start px-2 mb-2 mr-2 border-2 border-solid border-cta rounded-xl"
+                          className="relative items-start px-2 mb-2 mr-2 text-white border-2 border-solid border-darkIndigo bg-kelly rounded-xl"
                         >
                           <label
                             htmlFor={product.id.toString()}
                             key={product.id}
                           >
                             <input
-                              className="absolute left-0 w-10 h-6 appearance-none -z-10 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-none rounded-l-xl"
+                              className="absolute left-0 w-10 h-6 appearance-none text-raven -z-10 checked:bg-gradient-to-r from-ruby checked:border-none rounded-l-xl"
                               type="checkbox"
                               id={product.id.toString()}
                               value={product.id}
@@ -210,7 +210,7 @@ const ProductList = () => {
               )}
             </div>
 
-            <div className="col-span-1 p-4 pl-2 md:w-full md:border-2 md:border-l-0 border-cta bg-fg md:rounded-r-xl">
+            <div className="col-span-1 p-4 pl-2 md:w-full md:border-2 md:border-l-0 border-darkIndigo bg-fg md:rounded-r-xl">
               <p className="mb-4">Add these items:</p>
               {filteredProducts.length === 0 ? (
                 <p>No matching products found...</p>
@@ -236,11 +236,11 @@ const ProductList = () => {
                           whileTap={{ scale: 0.95 }}
                           variants={itemVariants}
                           key={index}
-                          className="relative items-start px-2 mb-2 mr-2 border-2 border-solid border-cta rounded-xl bg-bg"
+                          className="relative items-start px-2 mb-2 mr-2 bg-white border-2 border-solid border-kelly rounded-xl"
                         >
                           <label htmlFor={product.id.toString()}>
                             <input
-                              className="absolute left-0 w-10 h-6 appearance-none max-w-content -z-10 checked:bg-gradient-to-r from-fg to-bg-transparent checked:border-none rounded-l-xl active:scale-95"
+                              className="absolute left-0 w-10 h-6 appearance-none max-w-content -z-10 checked:bg-gradient-to-r from-darkAlice to-bg-transparent checked:border-none rounded-l-xl active:scale-95"
                               type="checkbox"
                               id={product.id.toString()}
                               value={product.id}
@@ -262,7 +262,7 @@ const ProductList = () => {
           </div>
           <div className="w-100 md:pl-8">
             <button
-              className="fixed bottom-0 z-50 p-2 pb-8 transition ease-in-out border-2 border-solid rounded-t-lg border-cta bg-header text-cta active:bg-cta active:text-fg active:scale-105 w-60 hover:-translate-y-1 hover:scale-110 hover:bg-fg hover:text-cta"
+              className="fixed bottom-0 z-50 p-2 pb-8 text-white transition ease-in-out border-2 border-solid rounded-t-lg border-darkIndigo bg-ruby text-cta active:bg-cta active:text-fg active:scale-105 w-60 hover:-translate-y-1 hover:scale-110 hover:bg-fg hover:text-cta"
               type="button"
               onClick={handleFridgeSubmit}
             >

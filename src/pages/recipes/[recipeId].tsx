@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 
 const Recipe = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
@@ -39,7 +40,8 @@ const Recipe = () => {
     }
   }, []);
 
-  const handleRecipeEaten = async () => {
+  const handleRecipeEaten = async (event: React.FormEvent) => {
+    event.preventDefault();
     if (!recipe || !recipe.ingredients || !Array.isArray(recipe.ingredients)) {
       return; // Handle invalid cases
     }
@@ -134,7 +136,7 @@ const Recipe = () => {
           alt={recipe.description}
         />
         <div>
-          <div className="grid grid-cols-1 m-auto md:grid-cols-3 md:w-2/3">
+          <div className="grid grid-cols-1 m-auto md:grid-cols-3 md:w-2/3 md:mb-16">
             <div className="col-span-2 md:pr-2">
               <p className="mb-4 font-lobster">Do the cooking by the book!</p>
               <p className="mb-4">{recipe.instructions}</p>
@@ -148,15 +150,24 @@ const Recipe = () => {
               </ul>
               <div>
                 <form onSubmit={handleRecipeEaten}>
-                  <button
-                    className="p-2 mt-2 border-2 border-btn bg-header rounded-xl"
+                  <motion.button
+                    whileHover={{
+                      scale: 1.05,
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 17,
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="p-2 mt-2 text-white bg-ruby rounded-xl"
                     type="submit"
                     disabled={isRemoved}
                   >
-                    {isRemoved
+                    {isRemoved === true
                       ? "Items removed"
                       : "Remove ingredients from Fridge"}
-                  </button>
+                  </motion.button>
                 </form>
               </div>
             </div>

@@ -60,20 +60,20 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="p-4 md:rounded-b-3xl bg-header">
-      <div className="flex flex-row justify-between mx-auto md:max-w-[80%]">
+    <nav className="p-2 md:p-9 md:rounded-b-3xl md:h-32 md:w-[80%] md:mx-auto bg-darkAlice">
+      <div className="flex flex-row justify-between mx-auto">
         <Link href="/">
           <div className="flex flex-row items-baseline">
             <Logo height="1.8rem" />
-            <p className="z-10 mb-4 ml-1 text-3xl font-lobster text-cta">
+            <p className="z-10 ml-1 text-3xl font-lobster text-lilia">
               what2cook
             </p>
           </div>
         </Link>
 
-        <div className="hidden text-lg md:flex md:flex-row">
+        <div className="hidden text-lg text-white md:flex md:flex-row">
           <span className="mx-4 transition ease-in-out hover:underline hover:scale-105">
-            <Link href="/">My fridge</Link>
+            <Link href="/#searchInput">My fridge</Link>
           </span>
           <span className="mx-4 transition ease-in-out hover:underline hover:scale-105">
             {token ? (
@@ -104,18 +104,18 @@ const NavBar = () => {
               >
                 <g>
                   <path
-                    fill="var(--cta)"
+                    fill="var(--darkAlice)"
                     d="M495.957,390.227H16.044C7.185,390.227,0,397.401,0,406.249v26.685c0,54.749,114.619,47.804,256,47.804
 		s256-2.185,256-47.804v-26.685C512,397.401,504.815,390.227,495.957,390.227z"
                   />
                   <path
-                    fill="var(--cta)"
+                    fill="var(--darkAlice)"
                     d="M42.934,353.858h426.13c15.913,0,28.794-12.891,28.794-28.794v-25.272c0-15.891-12.881-28.771-28.794-28.771
 		H430.37l-61.163,61.152c-15.652,15.662-41.033,15.662-56.696,0l-61.152-61.152H42.934c-15.913,0-28.793,12.88-28.793,28.771v25.272
 		C14.141,340.967,27.022,353.858,42.934,353.858z"
                   />
                   <path
-                    fill="var(--cta)"
+                    fill="var(--darkAlice)"
                     d="M256,30.977c-141.38,0-256,74.13-256,172.554v20.739c0,8.848,7.185,16.032,16.044,16.032h479.913
 		c8.858,0,16.043-7.185,16.043-16.032v-20.739C512,105.107,397.38,30.977,256,30.977z M128.706,144.118
 		c-9.38,0-16.967-7.586-16.967-16.967c0-9.37,7.587-16.978,16.967-16.978c9.37,0,16.978,7.609,16.978,16.978
@@ -130,7 +130,7 @@ const NavBar = () => {
                 </g>
               </svg>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-fg border-header text-cta">
+            <DropdownMenuContent className="bg-lilia border-darkAlice text-darkAlice">
               <DropdownMenuLabel>
                 <span>
                   {token ? (
@@ -143,7 +143,7 @@ const NavBar = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <span>
-                  <Link href="/">My fridge</Link>
+                  <Link href="/#searchInput">My fridge</Link>
                 </span>
               </DropdownMenuItem>
               <DropdownMenuItem>

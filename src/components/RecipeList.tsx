@@ -60,39 +60,50 @@ const RecipeList = () => {
       {randomRecipe === null ? (
         <div>
           <div
-            className="flex flex-col items-center justify-center my-4 bg-center bg-cover h-96 bg-header rounded-2xl"
+            className="relative my-4 overflow-hidden bg-center bg-cover rounded-2xl bg-raven "
             style={{ backgroundImage: 'url("/landing-bg.jpg")' }}
           >
-            <h2 className="p-2 text-lg font-bold rounded-lg bg-header">
-              Welcome to your Fridge
-            </h2>
-            <p className="p-2 rounded-b-lg bg-header">
-              Your recommended recipes will be shown here
-            </p>
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="relative flex flex-col h-96 rounded-2xl">
+              <h2 className="p-2 text-2xl font-bold text-white md:pt-4 md:pl-4 md:text-6xl">
+                Welcome to your Fridge
+              </h2>
+              <p className="p-2 text-white bg-ruby md:pl-4">
+                Click{" "}
+                <Link href={"/#searchInput"}>
+                  <span className="hover:underline">here</span>
+                </Link>{" "}
+                to start adding items to your inventory!
+              </p>
+            </div>
           </div>
           <p>Please add (more) items in your Fridge</p>
         </div>
       ) : (
         <div key={randomRecipe.id}>
-          <h1 className="text-lg font-bold">Recipe List</h1>
           <div
-            className="flex flex-col items-center justify-center my-4 bg-center bg-cover h-96 bg-header rounded-2xl"
+            className="relative my-4 overflow-hidden bg-center bg-cover rounded-2xl bg-raven "
             style={{ backgroundImage: `url(${randomRecipe.recipeImg})` }}
           >
-            <h2 className="p-2 text-lg font-bold rounded-lg bg-header">
-              Recipe of the Day!
-            </h2>
-            <Link href={`recipes/${randomRecipe.id}`}>
-              <p className="p-2 rounded-b-lg bg-header">
-                {randomRecipe.recipename}
-              </p>
-            </Link>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50" />
+            <div className="relative flex flex-col items-start justify-start h-96 rounded-2xl">
+              <h2 className="p-2 text-2xl font-bold text-white md:pt-4 md:pl-4 md:text-6xl">
+                How about this recipe?
+              </h2>
+              <Link href={`recipes/${randomRecipe.id}`}>
+                <div className="bg-ruby">
+                  <p className="p-2 text-white md:pl-4 md:pr-4">
+                    {randomRecipe.recipename}
+                  </p>
+                </div>
+              </Link>
+            </div>
           </div>
           <p>other available recipes:</p>
         </div>
       )}
 
-      <ScrollArea className="flex flex-row w-full p-4 overflow-auto md:border-0 rounded-2xl snap-x">
+      <ScrollArea className="flex flex-row w-full py-4 overflow-auto rounded-2xl snap-x">
         {recipes === null ? (
           <p>Loading recipes..</p>
         ) : (
@@ -101,21 +112,21 @@ const RecipeList = () => {
               <Link key={recipe.id} href={`recipes/${recipe.id}`}>
                 <div
                   key={recipe.id}
-                  className="flex flex-row around w-[300px] mr-4 border-2 border-solid border-header rounded-xl drop-shadow-lg scroll-m-3 snap-start"
+                  className="flex flex-row around w-[340px] mr-4 border-2 bg-kelly border-solid border-header rounded-xl drop-shadow-lg scroll-m-3 snap-start"
                 >
                   <img
-                    className="object-cover object-center w-20 h-20 border-2 border-dashed border-header rounded-xl"
+                    className="object-cover object-center w-20 h-20 rounded-xl"
                     src={recipe.recipeImg}
                     alt={recipe.description}
                   />
-                  <div className="flex flex-col w-full p-4 text-cta">
+                  <div className="flex flex-col justify-between w-full px-4 py-1 text-darkIndigo text-cta">
                     <span className="font-bold">{recipe.recipename}</span>
-                    <div className="flex flex-row justify-between">
-                      <span>⏲: {recipe.prepTime}mins</span>
+                    <div className="flex flex-row justify-between text-xs">
+                      <span>🕑: {recipe.prepTime}mins</span>
                       <span>
                         {recipe.serves === undefined
                           ? "no serving ☹️"
-                          : "👤".repeat(recipe.serves)}
+                          : "♨".repeat(recipe.serves)}
                       </span>
                     </div>
                   </div>
