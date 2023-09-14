@@ -28,7 +28,7 @@ const Welcome = () => {
             <span className="text-2xl font-bold text-darkIndigo">
               Personalized Meal Suggestions:
             </span>{" "}
-            Gives meal ideas tailored to each user's dietary preferences,
+            Gives meal ideas tailored to each user&apos;s dietary preferences,
             available ingredients, and cooking skills.
           </p>
           <p className="mb-8 text-xl">
