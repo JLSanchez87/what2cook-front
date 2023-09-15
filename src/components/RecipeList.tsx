@@ -91,7 +91,7 @@ const RecipeList = () => {
                 How about this recipe?
               </h2>
               <Link href={`recipes/${randomRecipe.id}`}>
-                <div className="bg-ruby">
+                <div className="border-b-4 border-r-4 border-raven hover:border-lilia bg-ruby">
                   <p className="p-2 text-white md:pl-4 md:pr-4">
                     {randomRecipe.recipename}
                   </p>

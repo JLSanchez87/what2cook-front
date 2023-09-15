@@ -36,7 +36,7 @@ const Welcome = () => {
               Quick and Easy Recipes:
             </span>{" "}
             Emphasis on recipes that can be prepared in 30 minutes or less, with
-            step-by-step instructions and video tutorials for efficiency.
+            step-by-step instructions.
           </p>
           <p className="mb-8 text-xl">
             <span className="text-2xl font-bold text-darkIndigo">

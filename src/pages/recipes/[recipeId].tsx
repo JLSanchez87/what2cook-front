@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 const Recipe = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [token, setToken] = useState<null | string>(null);
-  const [isRemoved, setIsRemoved] = useState(false);
+  const [isRemoved, setIsRemoved] = useState<boolean>(false);
   const router = useRouter();
   const recipeIdFromUrl = router.query.recipeId;
 
@@ -39,6 +39,10 @@ const Recipe = () => {
       setToken(tokenFromLs);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(isRemoved);
+  }, [isRemoved]);
 
   const handleRecipeEaten = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -84,9 +88,7 @@ const Recipe = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      console.log("Items removed from the fridge successfully.");
-
+      console.log("Items removed!");
       setIsRemoved(true);
     } catch (error) {
       console.error("Error handling recipe eaten:", error);
@@ -124,7 +126,7 @@ const Recipe = () => {
               Serves:
               {recipe.serves === undefined
                 ? "no serving ☹️"
-                : "👤".repeat(recipe.serves)}
+                : "♨".repeat(recipe.serves)}
             </span>
           </div>
           <p>{recipe.description}</p>
@@ -150,24 +152,41 @@ const Recipe = () => {
               </ul>
               <div>
                 <form onSubmit={handleRecipeEaten}>
-                  <motion.button
-                    whileHover={{
-                      scale: 1.05,
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 17,
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className="p-2 mt-2 text-white bg-ruby rounded-xl"
-                    type="submit"
-                    disabled={isRemoved}
-                  >
-                    {isRemoved === true
-                      ? "Items removed"
-                      : "Remove ingredients from Fridge"}
-                  </motion.button>
+                  {isRemoved === true ? (
+                    <motion.button
+                      whileHover={{
+                        scale: 1.05,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 17,
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      className="p-2 mt-2 bg-lilia text-raven by rounded-xl"
+                      type="submit"
+                      disabled={isRemoved}
+                    >
+                      Ingredients removed!
+                    </motion.button>
+                  ) : (
+                    <motion.button
+                      whileHover={{
+                        scale: 1.05,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 17,
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      className="p-2 mt-2 text-white bg-ruby rounded-xl"
+                      type="submit"
+                      disabled={isRemoved}
+                    >
+                      Remove ingredients from Fridge
+                    </motion.button>
+                  )}
                 </form>
               </div>
             </div>

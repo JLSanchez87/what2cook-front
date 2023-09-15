@@ -16,7 +16,7 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: none;
+  background: white;
 }
 
 /* Handle */
